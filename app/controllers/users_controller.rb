@@ -10,10 +10,26 @@ class UsersController < ApplicationController
         render json: { error: 'failed to create user' }, status: :unprocessable_entity
       end
     end
+    def create_profile
+      user = find_user
+      profile = user.profile.create(profile_params)
+      render json: profile, include: :user
+    end
+    def profile
+      user = find_user
+      profile = user.profile
+      render json: profile, include: user
+    end
   
     private
   
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :role)
+    end
+    def find_user
+      User.find(params[:id])
+    end
+    def profile_params
+      params.permit(:first_name, :last_name, :avatar, :bio, :age, :sex)
     end
 end
