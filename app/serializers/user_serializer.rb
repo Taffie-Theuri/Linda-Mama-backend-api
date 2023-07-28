@@ -1,4 +1,4 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :email, :role
+  attributes  :email, :role
   has_one :profile
 end
