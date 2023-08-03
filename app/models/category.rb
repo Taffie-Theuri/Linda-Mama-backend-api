@@ -1,2 +1,6 @@
 class Category < ApplicationRecord
-end
+    has_many :posts, dependent: :nullify
+  
+    validates :name, presence: true, uniqueness: true
+  end
+  
