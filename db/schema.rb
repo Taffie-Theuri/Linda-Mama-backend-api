@@ -14,25 +14,38 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_05_161813) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "categories", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "comments", force: :cascade do |t|
+    t.integer "user_id"   # Add this line to reference the user who made the comment
+    t.integer "post_id"
+    t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_comments_on_user_id"   # Add this index for user_id
+    t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
   create_table "posts", force: :cascade do |t|
+    t.string "title"               
+    t.text "content"               
+    t.integer "author_id"          
+    t.datetime "published_at"      
+    t.boolean "published", default: false  
+    t.integer "views", default: 0  
+    t.string "slug"                
+    t.string "image"               
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "password_digest"
+    t.string "username"           # Username of the user
+    t.string "email"              # Email address of the user
+    t.string "password_digest"    # Encrypted password
+    t.string "full_name"          # Full name of the user
+    t.string "avatar"             # Store the user's avatar image file name
+    t.boolean "admin", default: false   # Indicates if the user has admin privileges
+    t.timestamps
   end
+  
 
 end
