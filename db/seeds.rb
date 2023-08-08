@@ -33,7 +33,7 @@ end
   Post.create!(
     title: Faker::Lorem.sentence(word_count: 6, random_words_to_add: 4),
     content: Faker::Lorem.paragraph(sentence_count: 15, supplemental: true, random_sentences_to_add: 10),
-    user_id: random_user_id
+    author_id: random_user_id
   )
 end
 

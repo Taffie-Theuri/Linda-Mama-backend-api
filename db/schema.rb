@@ -29,9 +29,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_05_161813) do
     t.text "content"               
     t.integer "author_id"          
     t.datetime "published_at"      
-    t.boolean "published", default: false  
-    t.integer "views", default: 0  
-    t.string "slug"                
+    t.boolean "published", default: false               
     t.string "image"               
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -39,12 +37,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_05_161813) do
 
   create_table "users", force: :cascade do |t|
     t.string "username"           # Username of the user
-    t.string "email"              # Email address of the user
-    t.string "password_digest"    # Encrypted password
+    t.string "email"              # Email address of the user    # Encrypted password
     t.string "full_name"          # Full name of the user
-    t.string "avatar"             # Store the user's avatar image file name
     t.boolean "admin", default: false   # Indicates if the user has admin privileges
     t.timestamps
   end
-  
+
 end
