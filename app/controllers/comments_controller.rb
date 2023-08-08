@@ -1,13 +1,15 @@
 # app/controllers/comments_controller.rb
 
 class CommentsController < ApplicationController
+    before_action : find_post
+
     def index
-      @comments = Comment.all
+      @comments = Post.comments
       render json: @comments
     end
   
     def show
-      @comment = Comment.find(params[:id])
+      @comment = Post.find(params[:id])
       render json: @comment
     end
   
@@ -21,7 +23,7 @@ class CommentsController < ApplicationController
     end
   
     def update
-      @comment = Comment.find(params[:id])
+      @comment = Post.find(params[:id])
       if @comment.update(comment_params)
         render json: @comment
       else
@@ -36,6 +38,9 @@ class CommentsController < ApplicationController
     end
   
     private
+
+    def find_post
+      @post = Post.find(params[post-id])
   
     def comment_params
       params.require(:comment).permit(:content, :user_id, :post_id)

@@ -47,5 +47,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_05_161813) do
     t.timestamps
   end
   
-
 end
