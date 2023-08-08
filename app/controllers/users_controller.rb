@@ -1,10 +1,22 @@
 class UsersController < ApplicationController
+    require 'sendgrid-ruby'
+    include SendGrid
     skip_before_action :authorized, only: [:create]
+
 
     def create
       @user = User.create(user_params)
       if @user.valid?
         @token = encode_token(user_id: @user.id)
+        from = Email.new(email: 'roy.kimathi@student.moringaschool.com')
+        to = Email.new(email: @user.email)
+        subject = 'Welcome to Linda Mama'
+        content = Content.new(type: 'text/plain', value: @token)
+        mail = Mail.new(from, subject, to, content)
+
+        sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
+        response = sg.client.mail._('send').post(request_body: mail.to_json)
+        puts response
         render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
       else
         render json: { error: 'failed to create user' }, status: :unprocessable_entity
