@@ -26,7 +26,7 @@ module LindaMamaBackendApi
     # Configuration for the application, engines, and railties goes here.
     #
 
-    config.active_storage.service = :google
+    config.active_storage.service = :cloudinary
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #

@@ -1,34 +1,37 @@
-# Your corrected seeds code
+require 'faker'
+require 'open-uri'
+require 'cloudinary'
 
-# ...
 
-# Create 50 users
-50.times do
-  User.create!(
-    username: Faker::Internet.unique.username(specifier: 5..8),
-    email: Faker::Internet.unique.email,
-    admin: [true, false].sample
+# Create Users
+users = []
+3.times do |i|
+  users << User.create!(
+    username: Faker::Internet.username(specifier: "user#{i + 1}")
   )
 end
 
-# Create 100 posts
-100.times do
+# Create Posts
+posts = []
+20.times do
   post = Post.create!(
-    title: Faker::Lorem.sentence(word_count: 6, random_words_to_add: 4),
-    content: Faker::Lorem.paragraph(sentence_count: 15, supplemental: true, random_sentences_to_add: 10),
-    author: User.all.sample
+    title: Faker::Lorem.sentence,
+    content: Faker::Lorem.paragraph
   )
-
-  # Attach an image using Active Storage
-  image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: ['nature'])
-  post.image.attach(io: open(image_url), filename: "image.jpg")
+  
+  # Attach image using Active Storage
+  image_url = "https://res.cloudinary.com/dtnohzfmg/image/upload/v1691619555/211207-Illustrations-Black-Fetus-in-Utero-2000-4cfb977c8f634364a1b078962c7446ce_kn6qtq.webp"
+  post.image.attach(io: URI.open(image_url), filename: 'image.png')
+  
+  posts << post
 end
 
-# Create 200 comments
-200.times do
-  Comment.create!(
-    content: Faker::Lorem.paragraph(sentence_count: 4, supplemental: true, random_sentences_to_add: 2),
-    user_id: User.pluck(:id).sample,
-    post_id: Post.pluck(:id).sample
-  )
+# Create Comments
+posts.each do |post|
+  2.times do
+    post.comments.create!(
+      content: Faker::Lorem.sentence,
+      user: users.sample
+    )
+  end
 end

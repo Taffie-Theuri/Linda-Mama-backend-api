@@ -20,6 +20,13 @@ gem 'activestorage'
 
 gem 'better_errors', '~> 2.10', '>= 2.10.1'
 
-gem 'simple_form', '~> 5.2'
+# Gemfile
+gem 'cloudinary'
+
+gem 'activestorage-cloudinary-service'
+
+
+
+
 
 
