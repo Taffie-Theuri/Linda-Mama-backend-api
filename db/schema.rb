@@ -10,37 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_05_161813) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_08_093108) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "comments", force: :cascade do |t|
-    t.integer "user_id"   # Add this line to reference the user who made the comment
-    t.integer "post_id"
     t.text "content"
+    t.bigint "user_id"
+    t.bigint "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_comments_on_user_id"   # Add this index for user_id
     t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string "title"               
-    t.text "content"               
-    t.integer "author_id"          
-    t.datetime "published_at"      
-    t.boolean "published", default: false               
-    t.string "image"               
+    t.string "author"
+    t.string "title"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "author_id", null: false
+    t.index ["author_id"], name: "index_posts_on_author_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "email"
+    t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "username"           # Username of the user
-    t.string "email"              # Email address of the user    # Encrypted password
-    t.string "full_name"          # Full name of the user
-    t.boolean "admin", default: false   # Indicates if the user has admin privileges
-    t.timestamps
-  end
-
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
+  add_foreign_key "posts", "users", column: "author_id"
 end

@@ -1,49 +1,25 @@
-# app/controllers/comments_controller.rb
-
 class CommentsController < ApplicationController
-    before_action : find_post
+  def create
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.build(comment_params)
+    @comment.user = current_user
 
-    def index
-      @comments = Post.comments
-      render json: @comments
-    end
-  
-    def show
-      @comment = Post.find(params[:id])
-      render json: @comment
-    end
-  
-    def create
-      @comment = Comment.new(comment_params)
-      if @comment.save
-        render json: @comment, status: :created
-      else
-        render json: @comment.errors, status: :unprocessable_entity
-      end
-    end
-  
-    def update
-      @comment = Post.find(params[:id])
-      if @comment.update(comment_params)
-        render json: @comment
-      else
-        render json: @comment.errors, status: :unprocessable_entity
-      end
-    end
-  
-    def destroy
-      @comment = Comment.find(params[:id])
-      @comment.destroy
-      head :no_content
-    end
-  
-    private
-
-    def find_post
-      @post = Post.find(params[post-id])
-  
-    def comment_params
-      params.require(:comment).permit(:content, :user_id, :post_id)
+    if @comment.save
+      redirect_to @post, notice: "Comment created successfully."
+    else
+      redirect_to @post, alert: "Error creating comment."
     end
   end
-  
+
+  def destroy
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+    redirect_to @comment.post, notice: "Comment deleted successfully."
+  end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:content)
+  end
+end
