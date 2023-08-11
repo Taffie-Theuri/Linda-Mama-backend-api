@@ -8,15 +8,18 @@ class CommentsController < ApplicationController
   end
 
   def create
+    puts params.inspect # Print params hash for debugging
+    @post = Post.find(params[:post_id])
     @comment = @post.comments.build(comment_params)
-    @comment.user = user
-
+    @comment.user = current_user
+  
     if @comment.save
-      render json: @comment, status: :created
+      redirect_to @post, notice: "Comment created successfully."
     else
-      render json: { error: "Error creating comment." }, status: :unprocessable_entity
+      redirect_to @post, alert: "Error creating comment."
     end
   end
+  
 
   def destroy
     @comment.destroy
