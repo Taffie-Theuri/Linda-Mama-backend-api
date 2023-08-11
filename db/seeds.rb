@@ -38,7 +38,7 @@ image_urls = [
 20.times do |i|
   post = Post.create!(
     title: Faker::Lorem.sentence,
-    content: Array.new(4) { Faker::Lorem.paragraph_by_chars(number: 40) }.join("\n\n")
+    content: Array.new(4) { Faker::Lorem.paragraph_by_chars(number: 90) }.join("\n\n")
   )
   
   # Upload image to Cloudinary
