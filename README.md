@@ -1,24 +1,40 @@
-# README
+# Linda Mama
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Welcome to the back-end of the Linda Mama project. This Rails API serves as the foundation for the Linda Mama healthcare application, providing data and functionality to the front-end.
 
-Things you may want to cover:
+# Getting Started
 
-* Ruby version
+To set up and run the back-end:
+* Clone this repository: git clone <repository_url>
+* Navigate to the project directory: cd linda_mama_backend
+* Install dependencies: bundle install
+* Set up the database: rails db:migrate && rails db:seed
+* Start the server: rails server
+* You will be hosting the API on port 3000, so make sure that it is available.
 
-* System dependencies
 
-* Configuration
+# Authentication
 
-* Database creation
+User authentication is implemented using JWT (JSON Web Tokens). Make sure to include the JWT token in the headers of your API requests for authorized access.
 
-* Database initialization
+# Database
 
-* How to run the test suite
+The application uses PostgreSQL as the database.
 
-* Services (job queues, cache servers, search engines, etc.)
+# Ruby Version
 
-* Deployment instructions
+2.7.4
 
-* ...
+# Rails Version
+
+7.0.6
+
+
+# Contributors
+
+* Roy Kimathi
+* Christine Mbuvi
+* Brigette Orina
+* Anthony Mulinge
+* Taffie Theuri
+
